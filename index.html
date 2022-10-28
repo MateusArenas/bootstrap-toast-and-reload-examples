@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css" crossorigin="anonymous">
+</head>
+<body>
+
+  <button title="refresh" onclick="location.reload()" type="button" class="btn border rounded-circle bg-danger py-2">
+    <span class="mdi mdi-refresh" aria-hidden>
+  </button>
+
+  <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+
+  <div class="toast-container position-fixed bottom-0 start-0 p-3">
+    <div id="liveToast" class="toast text-white bg-dark" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+      <div class="toast-body d-flex flex-row align-items-center position-relative">
+        <div class="d-flex flex-fill px-2">
+          <p class="mb-0 fs-6" id="toast-undo-info">Registro apagado</p>
+        </div>
+        <button onclick="undoRegister()" type="button" class="btn btn-link px-2 me-2 fw-semibold text-decoration-none" data-bs-dismiss="toast" aria-label="Close">
+          Desfazer
+        </button>
+        <button type="button" class="btn-close px-2" data-bs-dismiss="toast" aria-label="Close" style="filter: invert(1);"></button>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+
+  <script>
+
+    const toastTrigger = document.getElementById('liveToastBtn');
+    const toastUndoEl = document.getElementById('liveToast');
+
+    const toastUndo = new bootstrap.Toast(toastUndoEl, { autohide: true, delay: 10000 });
+
+    const lastRegisters = [{ id: 99, content: "dados..." }, { id: 100, content: "dados..." }];
+
+    if (toastTrigger) {
+      toastTrigger.addEventListener('click', () => {
+
+        toastUndo.show();
+
+        const toastUndoInfoEl = toastUndoEl.querySelector("#toast-undo-info");
+
+        const totalRegisters = lastRegisters.length;
+        if (totalRegisters > 1) {
+          let infoText = "";
+          infoText = toastUndoInfoEl.innerText;
+          infoText = infoText.replace(/.*registro.?/gi, totalRegisters+" Registros ");
+          infoText = infoText.replace(/apagado.?/gi, "apagados");
+          toastUndoInfoEl.innerText = infoText;
+        }
+
+      })
+    }
+
+    //ATENÇÃO ARRUMAR OS ULTIMOS REGISTROS DO ALEXANDRE. 
+    //ADICIONAR ISSO E TBM O ALERT EM REMOVE E EDIT
+    //DEIXAR O UNDO PARA EDIT E REMOVE DE QUALQUER FORMA
+
+    function undoRegister () {
+      console.log({ lastRegister });
+    }
+    
+  </script>
+</body>
+</html>
